@@ -1,0 +1,501 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Lokoj Crafts</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'shop/style.css' %}">
+    <style>
+        /* Reuse your existing navbar styles */
+        .navbar {
+            background-color: #6d4c41;
+            padding: 15px 30px;
+            border-bottom: 3px solid #4e342e;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand {
+            font-size: 1.9rem;
+            color: #ffffff;
+            font-weight: bold;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+        }
+        .navbar-brand i {
+            margin-right: 10px;
+        }
+        .nav-link {
+            color: #ffffff !important;
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-left: 20px;
+            padding: 10px 15px !important;
+            transition: all 0.3s ease;
+            text-transform: none;
+            display: flex;
+            align-items: center;
+        }
+        .nav-link i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+        .nav-link:hover {
+            color: #d7ccc8 !important;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        #cart-count {
+            background-color: #cb9b90;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 50%;
+            font-size: 0.9rem;
+            margin-left: 5px;
+        }
+
+        /* About Us Page Specific Styles */
+        .about-hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                        url('{% static "shop/images/about-banner.jpg" %}');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .about-hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .about-hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-section {
+            padding: 60px 0;
+        }
+
+        .about-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: transform 0.3s;
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .about-card h3 {
+            color: #6d4c41;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .about-card i {
+            font-size: 2.5rem;
+            color: #8d6e63;
+            margin-bottom: 20px;
+        }
+
+        .values-section {
+            background-color: #f5f0eb;
+            padding: 60px 0;
+        }
+
+        .value-item {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .value-item i {
+            font-size: 2.5rem;
+            color: #8d6e63;
+            margin-bottom: 15px;
+        }
+
+        /* Team Section Styles */
+        .team-member {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+
+        .team-image-container {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid #e3d5ca;
+        }
+
+        .team-avatar {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .team-title {
+            color: #8d6e63;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .team-social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-link {
+            color: #8d6e63;
+            font-size: 1.3rem;
+            transition: color 0.3s;
+        }
+
+        .social-link:hover {
+            color: #6d4c41;
+        }
+
+        /* Footer Styles */
+        .craft-footer {
+            background-color: #5d4037;
+            color: #efebe9;
+            padding: 30px 0 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .footer-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .footer-col {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-logo i {
+            color: #cb9b90;
+            margin-right: 10px;
+        }
+
+        .footer-links h4 {
+            color: #cb9b90;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            color: #d7ccc8;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #cb9b90;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .footer-col {
+                flex: 100%;
+            }
+
+            .about-hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .about-hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <i class="fas fa-hands-helping"></i>
+                LokojCrafts.com
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link" href="{% url 'index' %}">
+                        <i class="fas fa-home"></i>
+                        Home
+                    </a>
+                    <a class="nav-link" href="{% url 'artisan_detail' artisan_id=1 %}">
+                        <i class="fas fa-user-cog"></i>
+                        Artisans
+                    </a>
+
+                    <a class="nav-link" href="{% url 'history' %}">
+                        <i class="fas fa-history"></i>
+                        History
+                    </a>
+                    <a class="nav-link" href="{% url 'cart' %}">
+                        <i class="fas fa-shopping-cart"></i>
+                        Cart <span id="cart-count">0</span>
+                    </a>
+                    <a class="nav-link active" href="{% url 'aboutus' %}">
+                        <i class="fas fa-info-circle"></i>
+                        About Us
+                    </a>
+                    {% if user.is_authenticated %}
+                    <div class="user-profile nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle"></i>
+                            {{ user.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'logout_view' %}"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                    {% else %}
+                    <a class="nav-link" href="{% url 'LoginPage' %}">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Login
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <div class="container">
+            <h1>Our Story</h1>
+            <p>Preserving Bangladesh's rich heritage through authentic handcrafted products</p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="about-card">
+                        <i class="fas fa-hands-helping"></i>
+                        <h3>Our Mission</h3>
+                        <p>At Lokoj Crafts, we're dedicated to preserving Bangladesh's traditional craftsmanship while providing sustainable livelihoods for rural artisans. We bridge the gap between skilled artisans and conscious consumers worldwide.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="about-card">
+                        <i class="fas fa-eye"></i>
+                        <h3>Our Vision</h3>
+                        <p>We envision a world where traditional crafts thrive, artisans earn fair wages, and consumers appreciate the stories behind handmade products. Our goal is to become Bangladesh's most trusted platform for authentic handicrafts.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="about-card">
+                        <i class="fas fa-history"></i>
+                        <h3>How We Started</h3>
+                        <p>Founded in 2025, Lokoj Crafts began as a small initiative to help a group of bamboo weavers in rural Bangladesh. After witnessing the decline of traditional crafts due to mass production, our founders created this platform to connect artisans directly with global customers.</p>
+                        <p>Today, we work with over 200 artisans across 15 craft clusters in Bangladesh, helping preserve techniques passed down through generations.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section">
+        <div class="container">
+            <h2 class="text-center mb-5" style="color: #5d4037;">Our Core Values</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="value-item">
+                        <i class="fas fa-hand-holding-heart"></i>
+                        <h4>Fair Trade</h4>
+                        <p>We ensure artisans receive fair compensation for their work, with transparent pricing that benefits both makers and buyers.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="value-item">
+                        <i class="fas fa-leaf"></i>
+                        <h4>Sustainability</h4>
+                        <p>All our products use natural, eco-friendly materials and traditional techniques that minimize environmental impact.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="value-item">
+                        <i class="fas fa-award"></i>
+                        <h4>Quality Craftsmanship</h4>
+                        <p>Each product is meticulously handcrafted using time-honored techniques, ensuring exceptional quality and durability.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="about-section">
+        <div class="container">
+            <h2 class="text-center mb-5" style="color: #5d4037;">Meet Our Team</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-5">
+                    <div class="team-member">
+                       <!-- <div class="team-image-container">
+                            <img src="{% static 'shop/images/female-avatar1.png' %}" alt="Humaira Ahmed Proma" class="team-avatar">
+                        </div> -->
+                        <h4>Humaira Ahmed Proma</h4>
+                        <p class="team-title">Founder & CEO</p>
+                        <div class="team-social-links">
+                            <a href="https://www.facebook.com/humayara.ahameda.2024" class="social-link"><i class="fab fa-facebook"></i></a>
+                            <a href="https://github.com/proma208" class="social-link"><i class="fab fa-github"></i></a>
+                         <!--   <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="team-member">
+                     <!--   <div class="team-image-container">
+                            <img src="{% static 'shop/images/female-avatar2.png' %}" alt="Susmita Roy" class="team-avatar">
+                        </div> -->
+                        <h4>Susmita Roy</h4>
+                        <p class="team-title">Founder & CEO</p>
+                        <div class="team-social-links">
+                            <a href="https://www.facebook.com/profile.php?id=100010835649637" class="social-link"><i class="fab fa-facebook"></i></a>
+                            <a href="https://github.com/roysusmita03" class="social-link"><i class="fab fa-github"></i></a>
+                          <!--  <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="craft-footer">
+        <div class="footer-container">
+            <div class="footer-row">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <i class="fas fa-hands-helping"></i>
+                        Lokoj Crafts
+                    </div>
+                    <p style="color: #d7ccc8;">Preserving Bangladesh's artisan heritage through authentic handcrafted products.</p>
+                </div>
+                <div class="footer-col">
+                    <div class="footer-links">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="{% url 'index' %}">Home</a></li>
+                            <li><a href="{% url 'artisan_detail' artisan_id=1 %}">Artisans</a></li>
+                            <li><a href="{% url 'aboutus' %}">About Us</a></li>
+                            <li><a href="{% url 'history' %}">History</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <div class="footer-links">
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="#">FAQs</a></li>
+                            <li><a href="#">Shipping Policy</a></li>
+                            <li><a href="#">Returns & Exchanges</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <div class="footer-links">
+                        <h4>Connect With Us</h4>
+                        <div class="social-links" style="display: flex; gap: 10px; font-size: 1.5rem;">
+                            <a href="#" style="color: #d7ccc8;"><i class="fab fa-facebook"></i></a>
+                          <!--  <a href="#" style="color: #d7ccc8;"><i class="fab fa-github"></i></a> -->
+                       <!--     <a href="#" style="color: #d7ccc8;"><i class="fab fa-pinterest"></i></a>
+                            <a href="#" style="color: #d7ccc8;"><i class="fab fa-youtube"></i></a> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Lokoj Crafts. All rights reserved.</p>
+                <p style="margin-top: 10px; font-size: 0.8rem;">
+                    <i class="fas fa-hand-paper" style="color: #cb9b90;"></i>
+                    Proudly handcrafted in Bangladesh
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Update cart count
+        function updateCartCount() {
+            fetch("{% url 'cart_count' %}")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('cart-count').textContent = data.count;
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+        });
+    </script>
+</body>
+</html>

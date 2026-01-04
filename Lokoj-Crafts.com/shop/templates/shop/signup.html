@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup Page - Lokoj Crafts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: grid;
+            grid-template-columns: 50% 50%; /* Two columns */
+            grid-template-rows: 100vh;
+            height: 100vh;
+            background: linear-gradient(to bottom, #3e2723, #6d4c41);
+            overflow: hidden;
+            animation: bgAnimate 10s ease infinite;
+        }
+
+        /* Left side: Welcome message */
+        .welcome-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: linear-gradient(to bottom, #3e2723, #6d4c41);
+            color: #fff;
+            padding: 20px;
+        }
+
+        .welcome-container h1 {
+            font-size: 50px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .welcome-container p {
+            font-size: 18px;
+            text-align: center;
+            line-height: 1.5;
+            font-weight: 300;
+        }
+
+        /* Right side: Signup form */
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        form {
+            width: 100%;
+            max-width: 400px;
+            background: linear-gradient(135deg, #d7ccc8, #6d4c41);
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid #4e342e;
+            animation: fadeIn 0.8s ease;
+        }
+
+        h3 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #3e2723;
+            text-align: center;
+        }
+
+        label {
+            font-size: 16px;
+            font-weight: 500;
+            color: #3e2723;
+            margin-top: 20px;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            height: 40px;
+            margin-top: 10px;
+            padding: 0 10px;
+            border: 2px solid #d7ccc8;
+            border-radius: 12px;
+            background-color: #fff;
+            font-size: 14px;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #ff8a65;
+            outline: none;
+            background-color: #fff;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 20px;
+            background-color: #3e2723;
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background-color: #2c211d;
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #3e2723;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #2c211d;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bgAnimate {
+            0% {
+                background: linear-gradient(to bottom, #3e2723, #6d4c41);
+            }
+            50% {
+                background: linear-gradient(to bottom, #5d4037, #795548);
+            }
+            100% {
+                background: linear-gradient(to bottom, #3e2723, #6d4c41);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Left side: Welcome message -->
+    <div class="welcome-container">
+        <h1>Welcome to LokojCrafts.com</h1>
+        <p>Join us today and explore unique handcrafted creations that bring culture and creativity to your life.</p>
+    </div>
+
+    <!-- Right side: Signup form -->
+    <div class="form-container">
+        <form action="{% url 'SignUpPage' %}" method="post">
+            {% csrf_token %}
+            <h3><strong>Create An Account</strong></h3>
+
+            <label for="username">Username</label>
+            <input type="text" placeholder="Username" name="username" id="username">
+
+            <label for="email">Email</label>
+            <input type="email" placeholder="Email or Phone" name="email" id="email">
+
+            <label for="password1">Password</label>
+            <input type="password" placeholder="Password" id="password1" name="password1">
+
+            <label for="password2">Confirm Password</label>
+            <input type="password" placeholder="Confirm Password" id="password2" name="password2">
+
+            <button type="submit">Signup</button>
+
+            <a href="{% url 'LoginPage' %}">I Already Have An Account</a>
+        </form>
+    </div>
+</body>
+</html>

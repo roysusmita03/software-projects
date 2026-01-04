@@ -1,0 +1,1017 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ artisan.name }} - Lokoj Crafts</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'shop/style.css' %}">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <style>
+        :root {
+            --primary-color: #5a3921;
+            --secondary-color: #8b5a2b;
+            --light-color: #e8d5b7;
+            --dark-color: #3e2723;
+            --text-color: #4e342e;
+            --accent-color: #d4a76a;
+            --background-color: #f9f5f0;
+        }
+
+        /* Navbar CSS with icons - Updated to match index page */
+        .navbar {
+            background-color: #6d4c41;
+            padding: 15px 30px;
+            border-bottom: 3px solid #4e342e;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand {
+            font-size: 1.9rem;
+            color: #ffffff;
+            font-weight: bold;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+        }
+        .navbar-brand i {
+            margin-right: 10px;
+        }
+        .nav-link {
+            color: #ffffff !important;
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-left: 20px;
+            padding: 10px 15px !important;
+            transition: all 0.3s ease;
+            text-transform: none;
+            display: flex;
+            align-items: center;
+        }
+        .nav-link i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+        .nav-link:hover {
+            color: #d7ccc8 !important;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        #cart-count {
+            background-color: #cb9b90;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 50%;
+            font-size: 0.9rem;
+            margin-left: 5px;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+
+        /* All other existing CSS remains exactly the same */
+        /* Artisan Profile Container */
+        .artisan-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 15px;
+        }
+
+        /* Profile Header */
+        .profile-header {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)),
+                        url('{% static "shop/images/artisans/profile-bg.jpg" %}');
+            background-size: cover;
+            background-position: center;
+            height: 250px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            align-items: flex-end;
+            position: relative;
+            margin-bottom: 50px;
+            z-index: 1;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .profile-header-content {
+            padding: 2rem;
+            color: white;
+            width: 100%;
+            text-align: center;
+        }
+
+        .profile-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .header-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .header-tagline {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .header-tagline .badge {
+            font-size: 0.85rem;
+            padding: 0.5rem 0.8rem;
+            background-color: rgba(255,255,255,0.2) !important;
+            color: white !important;
+            font-weight: 500;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        /* Profile Image Section */
+        .profile-image-container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            margin-top: 2rem;
+            cursor: pointer;
+        }
+
+        .profile-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid white;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Profile Info Section */
+        .profile-main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .profile-info {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.05);
+            width: 90%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .artisan-name {
+            color: var(--dark-color);
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .artisan-name::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent-color);
+        }
+
+        .artisan-location {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .artisan-rating {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            color: var(--dark-color);
+        }
+
+        /* Profile Content Sections */
+        .profile-content {
+            background: white;
+            border-radius: 15px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 2;
+            border: 1px solid rgba(0,0,0,0.05);
+            margin-top: 1rem;
+        }
+
+        .section-title {
+            color: var(--dark-color);
+            font-size: 1.7rem;
+            margin-bottom: 1.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--light-color);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .bio-text {
+            color: var(--text-color);
+            line-height: 1.9;
+            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Review Cards */
+        .reviews-section {
+            margin-top: 3rem;
+        }
+
+        .review-card {
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--accent-color);
+            transition: all 0.3s ease;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .review-user {
+            font-weight: 600;
+            color: var(--dark-color);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .review-date {
+            color: var(--secondary-color);
+            font-size: 0.95rem;
+        }
+
+        .review-text {
+            color: var(--text-color);
+            line-height: 1.8;
+            font-size: 1.05rem;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .review-text::before {
+            content: '"';
+            position: absolute;
+            left: 0;
+            top: -5px;
+            font-size: 2rem;
+            color: var(--accent-color);
+            opacity: 0.3;
+        }
+
+        /* More Artisans Section */
+        .more-artisans {
+            margin-top: 4rem;
+            padding: 3rem 0;
+        }
+
+        .more-artisans-title {
+            color: var(--dark-color);
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            letter-spacing: 1px;
+        }
+
+        .more-artisans-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(to right, var(--secondary-color), var(--accent-color));
+        }
+
+        .artisans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .artisan-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .artisan-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+
+        .artisan-card-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+
+        .artisan-card:hover .artisan-card-img {
+            transform: scale(1.05);
+        }
+
+        .artisan-card-body {
+            padding: 1.8rem;
+        }
+
+        .artisan-card-name {
+            color: var(--dark-color);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            letter-spacing: 0.3px;
+        }
+
+        .artisan-card-location {
+            color: var(--secondary-color);
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .artisan-card-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+
+        .view-profile-btn {
+            display: block;
+            text-align: center;
+            background: var(--secondary-color);
+            color: white;
+            padding: 0.7rem;
+            border-radius: 6px;
+            margin-top: 1.2rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            border: none;
+        }
+
+        .view-profile-btn:hover {
+            background: var(--dark-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Image Modal */
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-modal-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .image-modal-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+
+        .close-image-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .close-image-modal:hover {
+            color: var(--accent-color);
+            transform: rotate(90deg);
+        }
+
+        /* Rating Modal */
+        .rating-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(3px);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .modal-title {
+            color: var(--dark-color);
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 500;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--secondary-color);
+            transition: all 0.2s;
+        }
+
+        .close-modal:hover {
+            color: var(--dark-color);
+            transform: rotate(90deg);
+        }
+
+        /* Form Styles */
+        .form-control {
+            border: 1px solid rgba(0,0,0,0.1);
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.25rem rgba(212, 167, 106, 0.25);
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--dark-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .profile-header {
+                height: 220px;
+                margin-bottom: 40px;
+            }
+
+            .profile-image {
+                width: 160px;
+                height: 160px;
+            }
+
+            .profile-info {
+                padding: 1.8rem;
+            }
+
+            .artisan-name {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .artisans-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 2rem;
+            }
+
+            .artisan-card-img {
+                height: 180px;
+            }
+
+            .profile-header {
+                height: 200px;
+                margin-bottom: 30px;
+            }
+
+            .profile-image {
+                width: 140px;
+                height: 140px;
+            }
+
+            .profile-info {
+                padding: 1.5rem;
+            }
+
+            .profile-content {
+                padding: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .more-artisans-title {
+                font-size: 1.8rem;
+            }
+
+            .header-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .header-tagline .badge {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.7rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .profile-header h1 {
+                font-size: 2rem;
+            }
+
+            .artisan-name {
+                font-size: 1.8rem;
+            }
+
+            .profile-content {
+                padding: 1.5rem;
+            }
+
+            .review-card {
+                padding: 1.5rem;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+            }
+
+            .profile-header {
+                margin-bottom: 20px;
+                height: 180px;
+            }
+
+            .profile-image {
+                width: 120px;
+                height: 120px;
+            }
+
+            .profile-info {
+                padding: 1.2rem;
+            }
+
+            .header-tagline {
+                flex-direction: column;
+                align-items: center,
+                gap: 0.3rem;
+            }
+        }
+
+        /* Animation Effects */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .profile-content, .more-artisans {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .artisan-card {
+            animation: fadeIn 0.6s ease-out forwards;
+            animation-delay: calc(var(--order) * 0.1s);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar - Updated to match index page -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <i class="fas fa-shopping-cart"></i>
+                LokojCrafts.com
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link" href="{% url 'index' %}">
+                        <i class="fas fa-home"></i>
+                        Home
+                    </a>
+                    <a class="nav-link active" href="{% url 'artisan_detail' artisan_id=artisan.id %}">
+                        <i class="fas fa-user-cog"></i>
+                        Artisan Profile
+                    </a>
+                    <a class="nav-link" href="{% url 'history' %}">
+                        <i class="fas fa-history"></i>
+                        History
+                    </a>
+                    <a class="nav-link" href="{% url 'cart' %}">
+                        <i class="fas fa-shopping-cart"></i>
+                        Cart <span id="cart-count">0</span>
+                    </a>
+                 <!--   <a class="nav-link" href="#">
+                        <i class="fas fa-truck"></i>
+                        Payment & Courier
+                    </a> -->
+<!-- User Profile Dropdown -->
+                    {% if user.is_authenticated %}
+                    <div class="user-profile nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle"></i>
+                            {{ user.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-envelope me-2"></i> {{ user.email }}</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'logout_view' %}"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                    {% else %}
+
+                    <a class="nav-link" href="{% url 'logout_view' %}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Log Out
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Artisan Profile Content -->
+    <div class="artisan-container">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="profile-header-content">
+                <h1>Master Artisan Profile</h1>
+                <p class="header-subtitle">Traditional craftsmanship at its finest</p>
+                <div class="header-tagline">
+                  <!--  <span class="badge bg-light text-dark me-2">Certified</span>
+                    <span class="badge bg-light text-dark me-2">Since 2010</span>
+                    <span class="badge bg-light text-dark">5+ Years Experience</span> -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Profile Section -->
+        <div class="profile-main">
+            <div class="profile-info">
+                <h2 class="artisan-name">{{ artisan.name }}</h2>
+                <p class="artisan-location">
+                    <i class="fas fa-map-marker-alt"></i> {{ artisan.address }}
+                </p>
+
+                <div class="artisan-rating">
+                    Rating: {{ avg_rating|floatformat:1 }}/5 ({{ all_ratings.count }} reviews)
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Profile Content -->
+        <div class="profile-content">
+            <!-- Biography Section -->
+            <div class="bio-section">
+                <h3 class="section-title">
+                    <i class="fas fa-info-circle"></i> Biography
+                </h3>
+                <p class="bio-text">
+                    {{ artisan.bio }}
+                </p>
+            </div>
+
+            <!-- Profile Image Below Bio -->
+            <div class="profile-image-container" onclick="openImageModal('{% if artisan.image %}{{ artisan.image.url }}{% else %}{% static 'shop/images/artisans/default.jpg' %}{% endif %}')">
+                {% if artisan.image %}
+                    <img src="{{ artisan.image.url }}" class="profile-image" alt="{{ artisan.name }}">
+                {% else %}
+                    <img src="{% static 'shop/images/artisans/default.jpg' %}" class="profile-image" alt="Default Artisan">
+                {% endif %}
+            </div>
+
+            <!-- Rating Form -->
+            {% if request.user.is_authenticated %}
+            <div class="rating-section">
+                <h3 class="section-title">
+                    <i class="fas fa-star"></i> Rate This Artisan
+                </h3>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-4">
+                        <label class="form-label">Your Rating</label>
+                        <select class="form-select" name="rating" id="rating">
+                            <option value="1" {% if user_rating and user_rating.rating == 1 %}selected{% endif %}>1 - Poor</option>
+                            <option value="2" {% if user_rating and user_rating.rating == 2 %}selected{% endif %}>2 - Fair</option>
+                            <option value="3" {% if user_rating and user_rating.rating == 3 %}selected{% endif %}>3 - Good</option>
+                            <option value="4" {% if user_rating and user_rating.rating == 4 %}selected{% endif %}>4 - Very Good</option>
+                            <option value="5" {% if user_rating and user_rating.rating == 5 %}selected{% endif %}>5 - Excellent</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="comment" class="form-label">Your Review</label>
+                        <textarea class="form-control" id="comment" name="comment" rows="4"
+                                  placeholder="Share your experience with this artisan...">{% if user_rating %}{{ user_rating.comment }}{% endif %}</textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Submit Review
+                    </button>
+                </form>
+            </div>
+            {% endif %}
+
+            <!-- Customer Reviews -->
+            <div class="reviews-section">
+                <h3 class="section-title">
+                    <i class="fas fa-comments"></i> Customer Reviews
+                </h3>
+
+                {% if all_ratings %}
+                    {% for rating in all_ratings %}
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div>
+                                <span class="review-user">
+                                    <i class="fas fa-user"></i> {{ rating.user.username }}
+                                </span>
+                                <div class="artisan-rating">
+                                    Rating: {{ rating.rating }}/5
+                                </div>
+                            </div>
+                            <span class="review-date">
+                                {{ rating.created_at|date:"F j, Y" }}
+                            </span>
+                        </div>
+
+                        {% if rating.comment %}
+                        <div class="review-text">
+                            {{ rating.comment }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="text-center py-4">
+                        <i class="far fa-comment-dots fa-3x mb-3" style="color: var(--light-color);"></i>
+                        <p>No reviews yet. Be the first to share your experience!</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- More Artisans Section -->
+        <div class="more-artisans">
+            <h3 class="more-artisans-title">Discover More Artisans</h3>
+            <div class="artisans-grid">
+                {% for other_artisan in other_artisans %}
+                <div class="artisan-card" data-artisan-id="{{ other_artisan.id }}" style="--order: {{ forloop.index }};">
+                    {% if other_artisan.image %}
+                        <img src="{{ other_artisan.image.url }}" class="artisan-card-img" alt="{{ other_artisan.name }}"
+                             onclick="openImageModal('{{ other_artisan.image.url }}')">
+                    {% else %}
+                        <img src="{% static 'shop/images/artisans/default.jpg' %}" class="artisan-card-img" alt="Default Artisan"
+                             onclick="openImageModal('{% static 'shop/images/artisans/default.jpg' %}')">
+                    {% endif %}
+                    <div class="artisan-card-body">
+                        <h4 class="artisan-card-name">{{ other_artisan.name }}</h4>
+                        <p class="artisan-card-location">
+                            <i class="fas fa-map-marker-alt"></i> {{ other_artisan.address }}
+                        </p>
+                        <div class="artisan-card-rating">
+                            Rating: {{ other_artisan.avg_rating|floatformat:1 }}/5
+                        </div>
+                        <a href="{% url 'artisan_detail' artisan_id=other_artisan.id %}" class="view-profile-btn">
+                            View Profile
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div class="image-modal" id="imageModal">
+        <span class="close-image-modal" onclick="closeImageModal()">&times;</span>
+        <div class="image-modal-content">
+            <img id="modalImage" src="" alt="Artisan Image">
+        </div>
+    </div>
+
+    <!-- Rating Modal -->
+    <div class="rating-modal" id="ratingModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h3 class="modal-title">Rate This Artisan</h3>
+            <form id="ratingForm" method="post" action="{% url 'rate_artisan' %}">
+                {% csrf_token %}
+                <input type="hidden" name="artisan_id" id="modalArtisanId">
+                <div class="mb-4">
+                    <label class="form-label">Your Rating</label>
+                    <select class="form-select" name="rating" id="modalRatingValue">
+                        <option value="1">1 - Poor</option>
+                        <option value="2">2 - Fair</option>
+                        <option value="3">3 - Good</option>
+                        <option value="4">4 - Very Good</option>
+                        <option value="5">5 - Excellent</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="modalComment" class="form-label">Your Review</label>
+                    <textarea class="form-control" id="modalComment" name="comment" rows="4" placeholder="Share your experience with this artisan..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="fas fa-paper-plane"></i> Submit Review
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Update cart count
+        function updateCartCount() {
+            fetch("{% url 'cart_count' %}")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('cart-count').textContent = data.count;
+                });
+        }
+
+        // Image Modal functions
+        function openImageModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            document.getElementById('modalImage').src = imageSrc;
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').style.display = 'none';
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        }
+
+        // Close image modal when clicking outside the image
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {
+                closeImageModal();
+            }
+        });
+
+        // Modal functions
+        function openRatingModal(artisanId, initialRating = 0) {
+            const modal = document.getElementById('ratingModal');
+            document.getElementById('modalArtisanId').value = artisanId;
+
+            // Set initial rating if provided
+            if (initialRating > 0) {
+                document.getElementById('modalRatingValue').value = initialRating;
+            }
+
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        }
+
+        function closeModal() {
+            document.getElementById('ratingModal').style.display = 'none';
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('ratingModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Form submission
+        document.getElementById('ratingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Thank you for your rating!');
+                    closeModal();
+                    location.reload(); // Refresh to show the new rating
+                } else {
+                    alert('There was an error submitting your rating.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was an error submitting your rating.');
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+        });
+    </script>
+</body>
+</html>
