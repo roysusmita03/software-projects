@@ -1,0 +1,316 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mistry.com</title>
+    <!-- Include Bootstrap CSS from a CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Include Popper.js for Bootstrap functionality -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+    <!-- Include jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <!-- Include Bootstrap JS from a CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- Load custom CSS from static files -->
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/style.css' %}">
+
+    <!-- Set the title of the page -->
+    <title>Mistry.com</title>
+
+    <!-- Custom CSS -->
+    <style>
+        /* Body styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #343a40 !important;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .navbar-brand {
+            color: #fff !important;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar-toggler {
+            border-color: #fff !important;
+        }
+
+        .navbar-toggler-icon {
+            background-color: #fff !important;
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff !important;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #ffcc00 !important;
+        }
+
+        /* Search form styles */
+        .card.card-sm {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Product card styles */
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .card-img-top {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .btn.btn-warning {
+            background-color: #ffc107;
+            border-color: #ffc107;
+            color: #343a40;
+        }
+
+        .btn.btn-warning:hover {
+            background-color: #e0a800;
+            border-color: #e0a800;
+        }
+
+        /* Pagination styles */
+        .pagination {
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .page-item .page-link {
+            color: #343a40;
+        }
+
+        .page-item.active .page-link {
+            background-color: #ffc107;
+            border-color: #ffc107;
+        }
+
+        /* Hired list popover */
+        .popover-header {
+            background-color: #ffc107;
+            color: #343a40;
+            border-color: #ffc107;
+            font-weight: bold;
+        }
+
+        .popover-body {
+            background-color: #343a40;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Navbar section -->
+    <div class="row">
+        <div class="col-md-12">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="{% url 'index' %}">Mistry.com</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Links to different pages -->
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'index' %}"><strong>Home </strong><span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Services
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="#">- Carpenter Services</a>
+                                <a class="dropdown-item" href="#">- Painter Services</a>
+                                <a class="dropdown-item" href="#">- Cleaning Services</a>
+                                <a class="dropdown-item" href="#">- Plumber Services</a>
+                                <a class="dropdown-item" href="#">- PC Repair Services</a>
+                                <a class="dropdown-item" href="#">- Mobile Repair Services</a>
+                                <a class="dropdown-item" href="#">- Car Mechanic</a>
+                                <a class="dropdown-item" href="#">- Bike Mechanic</a>
+                                <a class="dropdown-item" href="#">- Tv Repair Services</a>
+                                <a class="dropdown-item" href="#">- House Maid</a>
+                                <a class="dropdown-item" href="#"><b>TEAM SERVICES</b></a>
+                                <a class="dropdown-item" href="#">- Plumber Team</a>
+                                <a class="dropdown-item" href="#">- Carpenter Team</a>
+                                <a class="dropdown-item" href="#">- Painter Team</a>
+                                <a class="dropdown-item" href="#">- Tech Repairing Team</a>
+                                <a class="dropdown-item" href="#">- Designer Team</a>
+                                <a class="dropdown-item" href="#">- Electric Line Repairing Team</a>
+                            </div>
+                        </li>
+                        <!-- Button to display a popover with the hired list -->
+                        <li class="nav-item">
+                            <button id="cart" data-html="true" type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+                                Hired List
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="{% url 'about' %}"><strong>About Us</strong></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="{% url 'training' %}"><strong>Training Session</strong></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="{% url 'LogoutPage' %}"><strong>Logout</strong></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- Search form section -->
+    <div class="row">
+        <div class="col-md-12">
+            <form class="card card-sm">
+                <div class="card-body row no-gutters align-items-center">
+                    <div class="col">
+                        <input type="search" name='item_name' placeholder="Find your worker" class="form-control form-control-borderless">
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-success" type="submit">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Product display section -->
+    <div class="row">
+        <!-- Loop through product objects -->
+        {% for product in product_objects %}
+        <div class="col-md-3">
+            <div class="card">
+                <!-- Display product image -->
+                <img src="{{product.image}}" class="card-img-top">
+                <div class="card-body">
+                    <!-- Display product title and category -->
+                    <div id="nm{{product.id}}" class="card-title">Name: {{product.title}}</div>
+                    <div class="card-title">Category: {{ product.category }}</div>
+                    <!-- Display product price and provide options to view or hire -->
+                    <div id="price{{product.id}}" class="card-text">{{ product.price }} tk/day</div>
+                    <br>
+                    <a href="/{{product.id}}" class="btn btn-warning">View</a>
+                    <button id="{{product.id}}" class="btn atc btn-warning">Click to hire</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <!-- Pagination section -->
+    <div class="row">
+        <div class="col-md-3 offset-md-4">
+            <ul class="pagination">
+                <!-- Previous page link -->
+                {% if product_objects.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ product_objects.previous_page_number }}">Previous</a>
+                </li>
+                {% endif %}
+                <!-- Current page indicator -->
+                <li class="page-item active">
+                    <a class="page-link" href="?page={{ product_objects.number }}">Current</a>
+                </li>
+                <!-- Next page link -->
+                {% if product_objects.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ product_objects.next_page_number }}">Next</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript section -->
+<script type="text/javascript">
+    // Log message to console
+    console.log('This is working');
+
+    // Check if cart exists in local storage, if not create a new one
+    if(localStorage.getItem('cart')==null){
+        var cart = {};
+    }
+    else{
+        cart = JSON.parse(localStorage.getItem('cart'));
+    }
+
+    // Event listener for adding items to cart
+    $(document).on('click','.atc',function(){
+        console.log("The add to cart button is clicked");
+        var item_id = this.id.toString();
+        console.log(item_id);
+
+        // If item is already in cart, update quantity and price
+        if(cart[item_id]!==undefined){
+            quantity = cart[item_id][0] + 1;
+            cart[item_id][0] = quantity;
+            cart[item_id][2] = cart[item_id][2] + parseFloat(document.getElementById("price"+item_id).innerHTML);
+        }
+        // If item is not in cart, add it
+        else{
+            quantity = 1;
+            price = parseFloat(document.getElementById("price"+item_id).innerHTML);
+            name = document.getElementById("nm"+item_id).innerHTML;
+            cart[item_id]=[quantity,name,price];
+        }
+        console.log(cart);
+        localStorage.setItem('cart',JSON.stringify(cart));
+        document.getElementById("cart").innerHTML = "Hired List("+ Object.keys(cart).length +")";
+    });
+
+    // Display cart items
+    DisplayCart(cart);
+    function DisplayCart(cart){
+        var cartString ="";
+        cartString += "<h5>Your Hired List</h5>";
+        var cartIndex = 1;
+
+        let cartObject = JSON.parse(localStorage.getItem('cart'))
+
+        for(item in cartObject)
+        {
+            console.log(cartObject[item][0])
+            console.log(cartObject[item][1])
+            cartString += cartObject[item][1] + " | Mistry List: " + cartObject[item][0] + " D" + "</br>"
+        }
+
+        // Display cart items and provide a link to checkout
+        cartString += "<a href='/checkout'><button class='btn btn-warning' id='checkout'>Checkout</button></a>";
+        document.getElementById("cart").setAttribute('data-content',cartString);
+        $('[data-toggle="popover"]').popover();
+    }
+</script>
+</body>
+</html>

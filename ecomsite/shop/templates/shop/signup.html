@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Signup Page</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <!--Stylesheet-->
+    <style media="screen">
+        *,
+        *:before,
+        *:after {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: darkgray;
+            /* Set background image */
+            background-image: url('https://png.pngtree.com/thumb_back/fw800/background/20231004/pngtree-cartoon-style-3d-illustration-diverse-team-of-industrial-workers-engineers-and-image_13520934.png');
+            /* Adjust background image properties */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .background {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 430px;
+            height: 520px;
+        }
+
+        .background .shape {
+            height: 200px;
+            width: 200px;
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        form {
+            height: auto; /* Change height to auto */
+            max-height: 600px; /* Adjust max-height */
+            width: 450px;
+            background-color: rgba(255, 255, 255, 0.9);
+            position: absolute;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            padding: 30px 35px; /* Adjust padding */
+            max-width: 100%;
+            overflow: auto; /* Add overflow property */
+        }
+
+        form * {
+            font-family: 'Poppins', sans-serif;
+            color: #000000;
+            letter-spacing: 0.5px;
+            outline: none;
+            border: none;
+        }
+
+        form h3 {
+            font-size: 32px;
+            font-weight: 500;
+            line-height: 45px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 20px; /* Adjust margin-top */
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        input {
+            display: block;
+            height: 40px; /* Adjust height */
+            width: 100%;
+            background-color: #f2f2f2;
+            border-radius: 6px;
+            padding: 0 10px;
+            margin-top: 5px; /* Adjust margin-top */
+            font-size: 14px;
+            font-weight: 300;
+            border: 1px solid #ccc;
+        }
+
+        ::placeholder {
+            color: #b0b0b0;
+        }
+
+        button {
+            width: calc(100% - 2px); /* Adjust button width */
+            background-color: #4070f4;
+            color: #ffffff;
+            padding: 15px 0;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #345dbf;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+<div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+<form action="" method="post">
+    {% csrf_token %}
+    <h3><strong>Mistry.com</strong></h3>
+    <h3>Signup Here</h3>
+
+    <label for="username">Username</label>
+    <input type="text" placeholder="Username" name="username" id="username">
+
+    <label for="email">Email</label>
+    <input type="email" placeholder="Email or Phone" name="email" id="email">
+
+    <label for="password1">Password</label>
+    <input type="password" placeholder="Password" id="password1" name="password1">
+
+    <label for="password2">Confirm Password</label>
+    <input type="password" placeholder="Confirm Password" id="password2" name="password2">
+
+    <br>
+
+    <button type="submit">Signup</button>
+
+    <br>
+    <br>
+
+    <a href="{% url 'LoginPage' %}">I already have an account</a>
+</form>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #343a40;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        .navbar a {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: inline-block;
+        }
+
+        .navbar a:hover {
+            color: #f8f9fa;
+        }
+
+        /* About section styles */
+        #about {
+            background-image: url('https://png.pngtree.com/thumb_back/fw800/background/20231004/pngtree-cartoon-style-3d-illustration-diverse-team-of-industrial-workers-engineers-and-image_13520934.png');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #000000;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #about:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+        #about-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        #about h2 {
+            color: #000000;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        #about p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        #about ul {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        #about ul li:before {
+            content: "\2022";
+            color: #000000;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            margin-right: 5px;
+        }
+
+        /* Image section styles */
+        #image-section {
+            padding: 20px;
+            text-align: center;
+        }
+
+        #image-section img {
+            max-width: 100%; /* Responsive image */
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="{% url 'index' %}">Home</a>
+    </div>
+
+    <!-- About Us Section -->
+    <section id="about">
+        <div id="about-content">
+            <br><br><br>
+            <h2>About Us</h2>
+            <p><b>Welcome to Labor Supply Solutions <b>"Misry.com"</b> - your premier labor supply solution provider.</b></p>
+            <p><b>At Mistry.com, we specialize in providing reliable and skilled labor to meet your business needs. Whether you require temporary workers for a short-term project or long-term staffing solutions, we have you covered.</b></p>
+            <p><b>Our commitment to excellence and customer satisfaction sets us apart. We strive to match the right workers with the right job, ensuring efficiency and productivity for your business.</b></p>
+            <p><b>Contact us today to discuss your labor supply needs. We look forward to partnering with you!</b></p>
+            <ul>
+                <li><strong>Phone:</strong> +8801744-187326</li>
+                <li><strong>Email:</strong> mistry7312.com</li>
+                <li><strong>Address:</strong> 123 Main Street, Cityville, State, Zip</li>
+            </ul>
+            <p><b>Additionally, we offer the following services:</b></p>
+            <ul>
+                <li><strong>Temporary staffing solutions</strong></li>
+                <li><strong>Permanent staffing solutions</strong></li>
+                <li><strong>Specialized labor services</strong></li>
+                <li><strong>Customized staffing packages</strong></li>
+            </ul>
+            <p><b>Our team of experienced professionals is dedicated to meeting your unique requirements and exceeding your expectations. We are committed to providing exceptional service and building lasting partnerships with our clients.</b></p>
+        </div>
+    </section>
+
+    <p><strong>Developed By :</strong></p>
+    <ul>
+        <li><strong>Md. Atif Salehin </strong></li>
+        <li><strong>Susmita Roy </strong></li>
+        <li><strong>Md. Sami </strong></li>
+        <li><strong>Humaira Ahmed Proma </strong></li>
+    </ul>
+</body>
+
+</html>
